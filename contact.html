@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Optional header; uses the same structure planned for other pages -->
   <header class="site-header">
     <nav class="nav">
       <a class="brand" href="main.html">Capstone Project</a>
@@ -66,6 +65,10 @@
         </div>
 
         <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-status">
+          Having trouble? <a id="mailto-fallback"
+          href="mailto:cpink5822707@mysundance.ca">Email me directly</a>.
+        </p>
       </form>
     </section>
   </main>
@@ -95,22 +98,11 @@
 
       function validateField(input) {
         const v = input.value.trim();
-        // Built-in constraint checks first
-        if (input.validity.valueMissing) {
-          return 'This field is required.';
-        }
-        if (input.type === 'email' && input.validity.typeMismatch) {
-          return 'Enter a valid email address.';
-        }
-        if (input.name === 'name' && v.length < 2) {
-          return 'Please enter your full name (2+ characters).';
-        }
-        if (input.name === 'subject' && v.length < 3) {
-          return 'Please enter a subject (3+ characters).';
-        }
-        if (input.name === 'message' && v.length < 10) {
-          return 'Please enter a message (10+ characters).';
-        }
+        if (input.validity.valueMissing) return 'This field is required.';
+        if (input.type === 'email' && input.validity.typeMismatch) return 'Enter a valid email address.';
+        if (input.name === 'name' && v.length < 2) return 'Please enter your full name (2+ characters).';
+        if (input.name === 'subject' && v.length < 3) return 'Please enter a subject (3+ characters).';
+        if (input.name === 'message' && v.length < 10) return 'Please enter a message (10+ characters).';
         if (input.name === 'phone' && v.length > 0 && !/^\\+?[0-9().\\-\\s]{7,20}$/.test(v)) {
           return 'Enter a valid phone number or leave it blank.';
         }
@@ -151,10 +143,34 @@
           return;
         }
 
-        // Optional: show a lightweight success without backend
+        // Success: open a composed email in the user's mail app
         e.preventDefault();
+        const recipient = 'cpink5822707@mysundance.ca';
+
+        const name    = document.getElementById('name').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const phone   = document.getElementById('phone').value.trim();
+        const subject = document.getElementById('subject').value.trim() || `New message from ${name || 'website visitor'}`;
+        const message = document.getElementById('message').value.trim();
+
+        const bodyLines = [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Phone: ${phone || 'N/A'}`,
+          '',
+          'Message:',
+          message
+        ];
+        const body = bodyLines.join('\\n');
+
+        const mailtoHref =
+          `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
         document.getElementById('form-status').textContent =
-          'Thanks—your message looks good locally. Hook this up to a backend or email service next.';
+          'Opening your email app to send the message...';
+        window.location.href = mailtoHref;
+
+        // Optional local reset
         form.reset();
         inputs.forEach(clearError);
       });
