@@ -3,28 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — Capstone Project</title>
+  <title>Contact — Christopher Pink</title>
   <meta name="theme-color" content="#0ea5e9" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Optional header; uses the same structure planned for other pages -->
   <header class="site-header">
     <nav class="nav">
-      <a class="brand" href="main.html">Capstone Project</a>
+      <a class="brand" href="main.html">Capstone</a>
       <div class="nav-links">
         <a href="showcase.html">Showcase</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" aria-current="page">Contact</a>
         <a href="about.html">About Me</a>
       </div>
     </nav>
   </header>
 
   <main class="container">
-    <!-- Intentionally empty body for now -->
+    <section class="card" role="region" aria-labelledby="contact-title">
+      <h1 id="contact-title">Contact</h1>
+      <p class="lead">Send a message and a reply will follow soon.</p>
+
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="form-field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" autocomplete="name"
+                 required minlength="2" maxlength="80" />
+          <p class="error" id="name-error" role="alert"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email"
+                 required maxlength="120" />
+          <p class="error" id="email-error" role="alert"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel"
+                 pattern="^\\+?[0-9().\\-\\s]{7,20}$" maxlength="24" />
+          <p class="error" id="phone-error" role="alert"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="subject">Subject</label>
+          <input id="subject" name="subject" type="text"
+                 required minlength="3" maxlength="120" />
+          <p class="error" id="subject-error" role="alert"></p>
+        </div>
+
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6"
+                    required minlength="10" maxlength="2000"></textarea>
+          <p class="error" id="message-error" role="alert"></p>
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="submit">Send</button>
+        </div>
+
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
   </main>
 
   <footer class="site-footer">
     <small>© 2025 Christopher Pink - Student @ Sundance College</small>
   </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById('contact-form');
+      const fields = ['name','email','phone','subject','message'];
+
+      function setError(input, message) {
+        const errorEl = document.getElementById(input.id + '-error');
+        input.setAttribute('aria-invalid', 'true');
+        input.classList.add('invalid');
+        errorEl.textContent = message;
+      }
+
+      function clearError(input) {
+        const errorEl = document.getElementById(input.id + '-error');
+        input.removeAttribute('aria-invalid');
+        input.classList.remove('invalid');
+        errorEl.textContent = '';
+      }
+
+      function validateField(input) {
+        const v = input.value.trim();
+        // Built-in constraint checks first
+        if (input.validity.valueMissing) {
+          return 'This field is required.';
+        }
+        if (input.type === 'email' && input.validity.typeMismatch) {
+          return 'Enter a valid email address.';
+        }
+        if (input.name === 'name' && v.length < 2) {
+          return 'Please enter your full name (2+ characters).';
+        }
+        if (input.name === 'subject' && v.length < 3) {
+          return 'Please enter a subject (3+ characters).';
+        }
+        if (input.name === 'message' && v.length < 10) {
+          return 'Please enter a message (10+ characters).';
+        }
+        if (input.name === 'phone' && v.length > 0 && !/^\\+?[0-9().\\-\\s]{7,20}$/.test(v)) {
+          return 'Enter a valid phone number or leave it blank.';
+        }
+        return '';
+      }
+
+      function handleValidate(e) {
+        const input = e.target;
+        if (!fields.includes(input.name)) return;
+        const msg = validateField(input);
+        if (msg) setError(input, msg); else clearError(input);
+      }
+
+      form.addEventListener('input', handleValidate);
+      form.addEventListener('blur', handleValidate, true);
+
+      form.addEventListener('submit', function (e) {
+        const inputs = fields.map(id => document.getElementById(id));
+        let firstInvalid = null;
+        let allValid = true;
+
+        inputs.forEach(input => {
+          const msg = validateField(input);
+          if (msg) {
+            setError(input, msg);
+            allValid = false;
+            if (!firstInvalid) firstInvalid = input;
+          } else {
+            clearError(input);
+          }
+        });
+
+        if (!allValid) {
+          e.preventDefault();
+          firstInvalid && firstInvalid.focus();
+          document.getElementById('form-status').textContent =
+            'Please fix the highlighted fields and try again.';
+          return;
+        }
+
+        // Optional: show a lightweight success without backend
+        e.preventDefault();
+        document.getElementById('form-status').textContent =
+          'Thanks—your message looks good locally. Hook this up to a backend or email service next.';
+        form.reset();
+        inputs.forEach(clearError);
+      });
+    })();
+  </script>
 </body>
 </html>
