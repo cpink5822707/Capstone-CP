@@ -219,3 +219,33 @@ h1 {
   .card { padding: 1.5rem; }
   .btn  { width: 100%; }
 }
+
+/* Wider card for desktop-heavy pages */
+.card-wide {
+  max-width: 1100px;
+}
+
+/* Two-column form grid */
+.contact-form .form-grid {
+  display: grid;
+  gap: 1rem 1.25rem;
+}
+
+/* Stack on small screens, split on larger screens */
+@media (min-width: 900px) {
+  .contact-form .form-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Make action row span across both columns */
+.contact-form .form-actions {
+  grid-column: 1 / -1;
+}
+
+/* Optional: ensure column wrappers don't collapse spacing */
+.contact-form .col {
+  display: grid;
+  gap: 1rem;
+}

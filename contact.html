@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — Capstone Project</title>
+  <title>Contact — Christopher Pink</title>
   <meta name="theme-color" content="#0ea5e9" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <nav class="nav">
-      <a class="brand" href="main.html">Capstone Project</a>
+      <a class="brand" href="main.html">Capstone</a>
       <div class="nav-links">
         <a href="showcase.html">Showcase</a>
         <a href="contact.html" aria-current="page">Contact</a>
@@ -20,55 +20,63 @@
   </header>
 
   <main class="container">
-    <section class="card" role="region" aria-labelledby="contact-title">
+    <section class="card card-wide" role="region" aria-labelledby="contact-title">
       <h1 id="contact-title">Contact</h1>
       <p class="lead">Send a message and a reply will follow soon.</p>
 
       <form id="contact-form" class="contact-form" novalidate>
-        <div class="form-field">
-          <label for="name">Full name</label>
-          <input id="name" name="name" type="text" autocomplete="name"
-                 required minlength="2" maxlength="80" />
-          <p class="error" id="name-error" role="alert"></p>
-        </div>
+        <div class="form-grid">
+          <!-- Left column -->
+          <div class="col col-left">
+            <div class="form-field">
+              <label for="name">Full name</label>
+              <input id="name" name="name" type="text" autocomplete="name"
+                     required minlength="2" maxlength="80" />
+              <p class="error" id="name-error" role="alert"></p>
+            </div>
 
-        <div class="form-field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email"
-                 required maxlength="120" />
-          <p class="error" id="email-error" role="alert"></p>
-        </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email"
+                     required maxlength="120" />
+              <p class="error" id="email-error" role="alert"></p>
+            </div>
 
-        <div class="form-field">
-          <label for="phone">Phone (optional)</label>
-          <input id="phone" name="phone" type="tel" inputmode="tel"
-                 pattern="^\\+?[0-9().\\-\\s]{7,20}$" maxlength="24" />
-          <p class="error" id="phone-error" role="alert"></p>
-        </div>
+            <div class="form-field">
+              <label for="phone">Phone (optional)</label>
+              <input id="phone" name="phone" type="tel" inputmode="tel"
+                     pattern="^\\+?[0-9().\\-\\s]{7,20}$" maxlength="24" />
+              <p class="error" id="phone-error" role="alert"></p>
+            </div>
+          </div>
 
-        <div class="form-field">
-          <label for="subject">Subject</label>
-          <input id="subject" name="subject" type="text"
-                 required minlength="3" maxlength="120" />
-          <p class="error" id="subject-error" role="alert"></p>
-        </div>
+          <!-- Right column -->
+          <div class="col col-right">
+            <div class="form-field">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" type="text"
+                     required minlength="3" maxlength="120" />
+              <p class="error" id="subject-error" role="alert"></p>
+            </div>
 
-        <div class="form-field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6"
-                    required minlength="10" maxlength="2000"></textarea>
-          <p class="error" id="message-error" role="alert"></p>
-        </div>
+            <div class="form-field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="10"
+                        required minlength="10" maxlength="2000"></textarea>
+              <p class="error" id="message-error" role="alert"></p>
+            </div>
+          </div>
 
-        <div class="actions">
-          <button class="btn" type="submit">Send</button>
+          <!-- Actions spanning both columns -->
+          <div class="form-actions">
+            <button class="btn" type="submit">Send</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+            <p class="form-status">
+              Having trouble? <a id="mailto-fallback"
+              href="mailto:cpink5822707@mysundance.ca">Email me directly</a>.
+            </p>
+          </div>
         </div>
-
-        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-        <p class="form-status">
-          Having trouble? <a id="mailto-fallback"
-          href="mailto:cpink5822707@mysundance.ca">Email me directly</a>.
-        </p>
       </form>
     </section>
   </main>
@@ -143,7 +151,7 @@
           return;
         }
 
-        // Success: open a composed email in the user's mail app
+        // Compose email via mailto
         e.preventDefault();
         const recipient = 'cpink5822707@mysundance.ca';
 
@@ -170,7 +178,6 @@
           'Opening your email app to send the message...';
         window.location.href = mailtoHref;
 
-        // Optional local reset
         form.reset();
         inputs.forEach(clearError);
       });
