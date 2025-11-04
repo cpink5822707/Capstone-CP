@@ -45,6 +45,11 @@ body {
   text-align: center;
 }
 
+/* Wider card for desktop-heavy pages like Contact */
+.card-wide {
+  max-width: 1100px;
+}
+
 .icon {
   font-size: 3rem;
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
@@ -203,6 +208,62 @@ h1 {
   color: var(--muted);
 }
 
+/* Two-column form grid for Contact */
+.contact-form .form-grid {
+  display: grid;
+  gap: 1rem 1.25rem;
+}
+
+@media (min-width: 900px) {
+  .contact-form .form-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.contact-form .form-actions {
+  grid-column: 1 / -1;
+}
+
+.contact-form .col {
+  display: grid;
+  gap: 1rem;
+}
+
+/* Showcase: centered non-stretched GitHub logo */
+.showcase-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem auto;
+  text-align: center;
+}
+
+.logo-link {
+  display: inline-block;
+  max-width: 360px; /* adjust as desired */
+  width: 100%;
+  line-height: 0;   /* remove inline image gap */
+}
+
+.github-logo {
+  display: block;
+  width: 100%;
+  height: auto;          /* preserve aspect ratio */
+  object-fit: contain;   /* safety for odd assets */
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.logo-link:hover .github-logo {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+}
+
+@media (min-width: 900px) {
+  .logo-link { max-width: 420px; }
+}
+
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .icon { animation: none; }
@@ -218,60 +279,4 @@ h1 {
 @media (max-width: 420px) {
   .card { padding: 1.5rem; }
   .btn  { width: 100%; }
-}
-
-/* Wider card for desktop-heavy pages */
-.card-wide {
-  max-width: 1100px;
-}
-
-/* Two-column form grid */
-.contact-form .form-grid {
-  display: grid;
-  gap: 1rem 1.25rem;
-}
-
-/* Stack on small screens, split on larger screens */
-@media (min-width: 900px) {
-  .contact-form .form-grid {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-  }
-}
-
-/* Make action row span across both columns */
-.contact-form .form-actions {
-  grid-column: 1 / -1;
-}
-
-/* Optional: ensure column wrappers don't collapse spacing */
-.contact-form .col {
-  display: grid;
-  gap: 1rem;
-}
-
-/* Showcase: GitHub logo link */
-.logo-link {
-  display: inline-block;
-  line-height: 0; /* remove inline gaps around image */
-}
-
-.github-logo {
-  height: 48px;
-  width: auto;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
-  transition: transform 0.15s ease, filter 0.15s ease;
-  vertical-align: middle;
-}
-
-.logo-link:hover .github-logo {
-  transform: translateY(-1px);
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
-}
-
-/* Make it a bit larger on wider screens */
-@media (min-width: 900px) {
-  .github-logo {
-    height: 56px;
-  }
 }
