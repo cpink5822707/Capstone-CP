@@ -249,3 +249,29 @@ h1 {
   display: grid;
   gap: 1rem;
 }
+
+/* Showcase: GitHub logo link */
+.logo-link {
+  display: inline-block;
+  line-height: 0; /* remove inline gaps around image */
+}
+
+.github-logo {
+  height: 48px;
+  width: auto;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  transition: transform 0.15s ease, filter 0.15s ease;
+  vertical-align: middle;
+}
+
+.logo-link:hover .github-logo {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
+}
+
+/* Make it a bit larger on wider screens */
+@media (min-width: 900px) {
+  .github-logo {
+    height: 56px;
+  }
+}
