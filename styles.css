@@ -230,7 +230,7 @@ h1 {
   gap: 1rem;
 }
 
-/* Showcase: centered non-stretched GitHub logo */
+/* Showcase: centered non-stretched GitHub logo (scaled down) */
 .showcase-links {
   display: flex;
   justify-content: center;
@@ -241,16 +241,16 @@ h1 {
 
 .logo-link {
   display: inline-block;
-  max-width: 360px; /* adjust as desired */
   width: 100%;
-  line-height: 0;   /* remove inline image gap */
+  max-width: 220px;  /* mobile-first size */
+  line-height: 0;    /* remove inline image gap */
 }
 
 .github-logo {
   display: block;
   width: 100%;
-  height: auto;          /* preserve aspect ratio */
-  object-fit: contain;   /* safety for odd assets */
+  height: auto;        /* preserve aspect ratio */
+  object-fit: contain; /* safety for odd assets */
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
   transition: transform 0.15s ease, filter 0.15s ease;
 }
@@ -260,23 +260,12 @@ h1 {
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35));
 }
 
-@media (min-width: 900px) {
-  .logo-link { max-width: 420px; }
+/* Scale up a bit on larger screens while staying modest */
+@media (min-width: 640px) {
+  .logo-link { max-width: 260px; }
 }
 
-/* Motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  .icon { animation: none; }
-  .btn { transition: none; }
+@media (min-width: 1024px) {
+  .logo-link { max-width: 300px; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-/* Small screens */
-@media (max-width: 420px) {
-  .card { padding: 1.5rem; }
-  .btn  { width: 100%; }
-}
