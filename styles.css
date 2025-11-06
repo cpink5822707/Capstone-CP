@@ -269,3 +269,14 @@ h1 {
   .logo-link { max-width: 300px; }
 }
 
+/* About page: centered lists without bullets */
+.list-plain {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 1rem;
+  text-align: center; /* card already centers, this is explicit */
+}
+
+.list-plain li {
+  padding: 0.15rem 0;
+}
